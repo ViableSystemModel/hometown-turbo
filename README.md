@@ -1,4 +1,5 @@
 # create-t3-turbo
+## Configured with Clerk (Email + Google Auth) and PlanetScale
 
 <img width="1758" alt="turbo2" src="https://user-images.githubusercontent.com/51714798/213819392-33e50db9-3e38-4c51-9a22-03abe5e48f3d.png">
 
@@ -38,7 +39,7 @@ packages
  ├─ api
  |   └─ tRPC v10 router definition
  ├─ auth
-     └─ authentication using next-auth. **NOTE: Only for Next.js app, not Expo**
+     └─ Clerk Auth
  └─ db
      └─ typesafe db-calls using Prisma
 ```
@@ -46,20 +47,6 @@ packages
 > In this template, we use `@acme` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@acme/` to something like `@my-company/` / `@project-name/`.
 
 ## FAQ
-
-### Can you include Solito?
-
-No. Solito will not be included in this repo. It is a great tool if you want to share code between your Next.js and Expo app. However, the main purpose of this repo is not the integration between Next.js and Expo - it's the codesplitting of your T3 App into a monorepo, the Expo app is just a bonus example of how you can utilize the monorepo with multiple apps but can just as well be any app such as Vite, Electron, etc.
-
-Integrating Solito into this repo isn't hard, and there are a few [offical templates](https://github.com/nandorojo/solito/tree/master/example-monorepos) by the creators of Solito that you can use as a reference.
-
-### What auth solution should I use instead of Next-Auth.js for Expo?
-
-I've left this kind of open for you to decide. Some options are [Clerk](https://clerk.dev), [Supabase Auth](https://supabase.com/docs/guides/auth), [Firebase Auth](https://firebase.google.com/docs/auth/) or [Auth0](https://auth0.com/docs). Note that if you're dropping the Expo app for something more "browser-like", you can still use Next-Auth.js for those. [See an example in a Plasmo Chrome Extension here](https://github.com/t3-oss/create-t3-turbo/tree/chrome/apps/chrome).
-
-The Clerk.dev team even made an [official template repository](https://github.com/clerkinc/t3-turbo-and-clerk) integrating Clerk.dev with this repo.
-
-During Launch Week 7, Supabase [announced their fork](https://supabase.com/blog/launch-week-7-community-highlights#t3-turbo-x-supabase) of this repo integrating it with their newly announced auth improvements. You can check it out [here](https://github.com/supabase-community/create-t3-turbo).
 
 ### Does this pattern leak backend code to my client applications?
 
@@ -76,11 +63,6 @@ To get it running, follow the steps below:
 ```diff
 # Install dependencies
 pnpm i
-
-# In packages/db/prisma update schema.prisma provider to use sqlite
-# or use your own database provider
-- provider = "postgresql"
-+ provider = "sqlite"
 
 # Configure environment variables.
 # There is an `.env.example` in the root directory you can use for reference
@@ -118,11 +100,15 @@ pnpm db:push
 
 ## Deployment
 
-### Next.js
+### Setup Clerk Authentication
 
-#### Prerequisites
+This repository is configured with [Clerk](https://clerk.com/) authentication. You can use any other authentication provider, but you will need to modify:
+1. NextJS App: The `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` environment variables in the `.env` file.
+2. Expo App: The `CLERK_PUBLISHABLE_KEY` variable in the `app.config.ts` file
 
-_We do not recommend deploying a SQLite database on serverless environments since the data wouldn't be persisted. I provisioned a quick Postgresql database on [Railway](https://railway.app), but you can of course use any other database provider. Make sure the prisma schema is updated to use the correct database._
+### Setup PlanetScale Database
+
+This repository is configured with PlanetScale MySQL databases. You can use any other database provider, but you will need to modify the `DATABASE_URL` environment variable in the `.env` file.
 
 **Please note that the Next.js application with tRPC must be deployed in order for the Expo app to communicate with the server in a production environment.**
 
