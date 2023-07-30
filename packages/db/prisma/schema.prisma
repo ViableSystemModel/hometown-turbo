@@ -11,8 +11,89 @@ datasource db {
     relationMode = "prisma"
 }
 
+enum TimerType {
+    SESSION
+}
+
+model Timer {
+    id         String    @id @default(cuid())
+    type       TimerType @default(SESSION)
+    creatorId  String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    expiration DateTime
+}
+
+model Community {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    name      String
+    creatorId String
+    Post      Post[]
+}
+
+enum FileType {
+    IMAGE
+    VIDEO
+}
+
+model File {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    type      FileType
+    userId    String
+    url       String   @unique
+    Post      Post?
+}
+
+enum PostType {
+    EMPTY
+    TEXT
+    IMAGE
+    VIDEO
+}
+
+enum PostVisibility {
+    DRAFT
+    PRIVATE
+    COMMUNITY
+    PUBLIC
+}
+
 model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
+    id          String         @id @default(cuid())
+    createdAt   DateTime       @default(now())
+    updatedAt   DateTime       @updatedAt
+    userId      String
+    title       String         @default("")
+    body        String         @default("")
+    url         String?        @unique
+    type        PostType       @default(EMPTY)
+    visibility  PostVisibility @default(DRAFT)
+    file        File?          @relation(fields: [url], references: [url])
+    community   Community      @relation(fields: [communityId], references: [id])
+    communityId String
+
+    @@index([communityId])
+    @@index([url])
+}
+
+// TODO: Remove usages and delete
+model Image {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    url       String
+    userId    String
+}
+
+// TODO: Remove usages and delete
+model Video {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    url       String
+    userId    String
 }
