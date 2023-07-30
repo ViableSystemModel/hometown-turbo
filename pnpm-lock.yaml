@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@acme/eslint-config':
+      '@hometown/eslint-config':
         specifier: ^0.1.0
         version: link:packages/config/eslint
       '@ianvs/prettier-plugin-sort-imports':
@@ -108,13 +108,13 @@ importers:
         specifier: 1.9.1
         version: 1.9.1
     devDependencies:
-      '@acme/api':
+      '@hometown/api':
         specifier: ^0.1.0
         version: link:../../packages/api
-      '@acme/eslint-config':
+      '@hometown/eslint-config':
         specifier: ^0.1.0
         version: link:../../packages/config/eslint
-      '@acme/tailwind-config':
+      '@hometown/tailwind-config':
         specifier: ^0.1.0
         version: link:../../packages/config/tailwind
       '@babel/core':
@@ -156,10 +156,10 @@ importers:
 
   apps/nextjs:
     dependencies:
-      '@acme/api':
+      '@hometown/api':
         specifier: ^0.1.0
         version: link:../../packages/api
-      '@acme/db':
+      '@hometown/db':
         specifier: ^0.1.0
         version: link:../../packages/db
       '@clerk/nextjs':
@@ -199,10 +199,10 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
-      '@acme/eslint-config':
+      '@hometown/eslint-config':
         specifier: ^0.1.0
         version: link:../../packages/config/eslint
-      '@acme/tailwind-config':
+      '@hometown/tailwind-config':
         specifier: ^0.1.0
         version: link:../../packages/config/tailwind
       '@types/node':
@@ -235,7 +235,7 @@ importers:
 
   packages/api:
     dependencies:
-      '@acme/db':
+      '@hometown/db':
         specifier: ^0.1.0
         version: link:../db
       '@trpc/client':
@@ -251,7 +251,7 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
-      '@acme/eslint-config':
+      '@hometown/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint
       eslint:
