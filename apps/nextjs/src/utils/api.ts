@@ -30,4 +30,3 @@ export const api = createTRPCNext<AppRouter>({
 });
 
 export { type RouterInputs, type RouterOutputs } from "@hometown/api";
-@hometown
